@@ -641,7 +641,7 @@ angular.module('extended-typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap.pos
 angular.module('bootstrap-select', ['extended-typeahead', 'bootstrap-select/template/bootstrap-select.html'])
   .component('bootstrapSelect', {
     templateUrl: 'bootstrap-select/template/bootstrap-select.html',
-    controller: selectController,
+    controller: BootstrapSelectController,
     bindings: {
       choices: '<',
       selection: '=',
@@ -651,7 +651,7 @@ angular.module('bootstrap-select', ['extended-typeahead', 'bootstrap-select/temp
     }
   })
   
-  .directive('focusOnShow', function($timeout) {
+  .directive('focusOnShow', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attr) {
@@ -666,10 +666,11 @@ angular.module('bootstrap-select', ['extended-typeahead', 'bootstrap-select/temp
             }
         }
     };
-  });
+  }]);
   
 
-function selectController($scope, $element, $attrs, $animate, $templateRequest, $compile, $parse) {
+  BootstrapSelectController.$inject = ['$scope', '$element', '$attrs', '$animate', '$templateRequest', '$compile', '$parse']
+  function BootstrapSelectController($scope, $element, $attrs, $animate, $templateRequest, $compile, $parse) {
   var ctrl = this;
   
   ctrl.updateComponentValue = function() {
